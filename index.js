@@ -156,21 +156,6 @@ app.get('/chats/:id',asyncWrap(async(req,res,next)=>{
     res.render('edit.ejs',{chat});
 }));
 
-const handleValidationError = (err)=>{
-    console.log("This is a ValidationError");
-    console.dir(err.message);
-    return err;
-}
-
-//It will give particular err name
-app.use((err,req,res,next)=>{
-    console.log(err.name);
-    if(err.name==="ValidationError"){
-        err = handleValidationError(err);
-    }
-    return next(new ExpressError(404,"something went wrong"));
-})
-
 //middleware to handle error
 app.use((err,req,res,next)=>{
     let {status=404,message="Some Message Occured"} = err;
